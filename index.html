@@ -17,22 +17,24 @@
 
     <style>
         :root {
-            --cream-glass: rgba(253, 251, 247, 0.94);
-            --cream-border: rgba(212, 175, 55, 0.45);
-            --text-dark: #20130b;
-            --rcb-red: #c8102e;
-            --gold-accent: #d4af37;
-            --royal-blue: #0b1d3a;
+            /* Translucent Glassmorphism */
+            --glass-bg: rgba(255, 255, 255, 0.12);
+            --glass-border: rgba(255, 255, 255, 0.28);
+            --glass-gold-border: rgba(212, 175, 55, 0.45);
+            --text-light: #ffffff;
+            --text-sub: #f3e8e2;
+            --gold-accent: #fde047;
+            --rcb-red: #ef4444;
         }
 
         body {
             font-family: 'Inter', sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #120205, #2d060c, #700f1c, #9e1b2f, #1b0408, #080d1a);
+            background: linear-gradient(135deg, #0d0103, #26050b, #590c17, #851424, #180306, #060914);
             background-size: 350% 350%;
             animation: royalPassionFlow 14s ease-in-out infinite;
-            color: var(--text-dark);
+            color: var(--text-light);
             overflow-x: hidden;
             scroll-behavior: smooth;
         }
@@ -54,7 +56,7 @@
             pointer-events: none;
         }
 
-        /* Ambient Floating Balloons Background */
+        /* Ambient Floating Balloons */
         .balloons-container {
             position: fixed;
             inset: 0;
@@ -69,7 +71,7 @@
             width: 44px;
             height: 56px;
             border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
-            opacity: 0.75;
+            opacity: 0.7;
             animation: floatUp linear infinite;
         }
 
@@ -106,15 +108,15 @@
             100% { transform: translateY(-120vh) rotate(18deg); opacity: 0; }
         }
 
-        /* Cream Glassmorphism */
-        .cream-glass {
-            background: var(--cream-glass);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--cream-border);
+        /* Pure Translucent Glassmorphism */
+        .translucent-glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
             border-radius: 1.5rem;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45), inset 0 0 15px rgba(255, 255, 255, 0.6);
-            color: var(--text-dark);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+            color: var(--text-light);
         }
 
         /* Typography */
@@ -124,11 +126,11 @@
         .cinzel-text { font-family: 'Cinzel Decorative', serif; }
         .jersey-font { font-family: 'Teko', sans-serif; }
 
-        /* Intro Overlay */
+        /* Intro Screen with Stadium Floodlights & 3D Cricket Ball */
         #intro-overlay {
             position: fixed;
             inset: 0;
-            background: radial-gradient(circle at 50% 45%, #2a050b 0%, #100204 70%, #000000 100%);
+            background: radial-gradient(circle at 50% 50%, #220308 0%, #0c0103 65%, #000000 100%);
             z-index: 100;
             display: flex;
             flex-direction: column;
@@ -145,38 +147,76 @@
             pointer-events: none;
         }
 
-        .cricket-stage {
+        /* Stadium Light Beams */
+        .floodlight-left, .floodlight-right {
+            position: absolute;
+            top: -20%;
+            width: 320px;
+            height: 140%;
+            opacity: 0.35;
+            pointer-events: none;
+            filter: blur(35px);
+        }
+        .floodlight-left {
+            left: -10%;
+            background: conic-gradient(from 120deg at 0% 0%, rgba(253, 224, 71, 0.5), transparent 60deg);
+            transform: rotate(-15deg);
+        }
+        .floodlight-right {
+            right: -10%;
+            background: conic-gradient(from 240deg at 100% 0%, rgba(255, 255, 255, 0.5), transparent 60deg);
+            transform: rotate(15deg);
+        }
+
+        .stadium-stage {
             position: relative;
-            width: 220px;
-            height: 220px;
+            width: 240px;
+            height: 240px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 2rem;
         }
 
-        .halo-glow {
+        /* 3D Realistic Cricket Ball */
+        .cricket-ball {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #ef4444 0%, #b91c1c 45%, #7f1d1d 75%, #450a0a 100%);
+            box-shadow: 0 0 50px rgba(239, 68, 68, 0.55), inset -15px -15px 30px rgba(0,0,0,0.8), inset 8px 8px 18px rgba(255,255,255,0.3);
+            animation: spinBall 12s linear infinite;
+        }
+
+        /* Cricket Seam Stitching */
+        .cricket-seam {
             position: absolute;
             inset: 0;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.4) 0%, rgba(200, 16, 46, 0.25) 50%, transparent 75%);
-            animation: pulseGlow 3.5s ease-in-out infinite alternate;
+            border-left: 3px dashed #ffffff;
+            border-right: 3px dashed #ffffff;
+            opacity: 0.85;
+            filter: drop-shadow(0 0 2px rgba(0,0,0,0.8));
+            transform: rotate(25deg);
         }
 
-        @keyframes pulseGlow {
-            0% { transform: scale(0.85); opacity: 0.6; }
-            100% { transform: scale(1.18); opacity: 1; }
+        .crown-floater {
+            position: absolute;
+            top: -28px;
+            font-size: 3.2rem;
+            filter: drop-shadow(0 0 20px rgba(253, 224, 71, 0.9));
+            animation: bounceCrown 2.5s ease-in-out infinite alternate;
         }
 
-        .gold-crown {
-            font-size: 5rem;
-            filter: drop-shadow(0 0 25px rgba(212, 175, 55, 0.8));
-            animation: floatCrown 3s ease-in-out infinite;
+        @keyframes spinBall {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
-        @keyframes floatCrown {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-12px) scale(1.05); }
+        @keyframes bounceCrown {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
         }
 
         .hero-photo-wrapper {
@@ -192,7 +232,7 @@
             content: '';
             position: absolute;
             inset: 2px;
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.6);
             border-radius: 12px;
             pointer-events: none;
         }
@@ -207,11 +247,12 @@
         }
 
         .name-badge {
-            background: linear-gradient(to right, #100204, #2a050b, #100204);
+            background: rgba(20, 3, 7, 0.7);
+            backdrop-filter: blur(12px);
             border: 2px solid #d4af37;
             padding: 1.5rem 3rem;
-            border-radius: 6px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(212, 175, 55, 0.15);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(212, 175, 55, 0.2);
             position: relative;
         }
 
@@ -226,9 +267,10 @@
         .date-badge {
             width: 130px;
             height: 130px;
-            background: linear-gradient(135deg, #2a050b, #100204);
+            background: rgba(25, 4, 8, 0.85);
+            backdrop-filter: blur(12px);
             border: 3px solid #d4af37;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5), inset 0 0 15px rgba(212, 175, 55, 0.3);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6), inset 0 0 15px rgba(212, 175, 55, 0.35);
             position: absolute;
             top: 0;
             left: 50%;
@@ -245,17 +287,17 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0.75rem 0;
-            border-bottom: 1px dashed rgba(44, 30, 22, 0.15);
+            padding: 0.85rem 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
         }
         .stat-row:last-child { border-bottom: none; }
-        .stat-row span:first-child { color: #5a4237; font-weight: 600; }
-        .stat-row span:last-child { font-weight: 700; color: var(--text-dark); }
+        .stat-row span:first-child { color: #fecdd3; font-weight: 500; }
+        .stat-row span:last-child { font-weight: 700; color: #ffffff; }
     </style>
 </head>
 <body class="antialiased">
 
-    <!-- Ambient Floating Balloons Background -->
+    <!-- Ambient Floating Balloons -->
     <div class="balloons-container">
         <div class="balloon b-gold" style="left: 7%; animation-duration: 17s; animation-delay: 0s;"></div>
         <div class="balloon b-crimson" style="left: 21%; animation-duration: 21s; animation-delay: 3s;"></div>
@@ -268,24 +310,29 @@
     <!-- Fireworks Canvas -->
     <canvas id="fireworks-canvas"></canvas>
 
-    <!-- Tap to Enter Intro Screen -->
+    <!-- Tap to Enter Intro Screen with Stadium Floodlights & Cricket Ball -->
     <div id="intro-overlay" onclick="startExperience()">
-        <div class="cricket-stage">
-            <div class="halo-glow"></div>
-            <div class="gold-crown">👑</div>
+        <div class="floodlight-left"></div>
+        <div class="floodlight-right"></div>
+        
+        <div class="stadium-stage">
+            <span class="crown-floater">👑</span>
+            <div class="cricket-ball">
+                <div class="cricket-seam"></div>
+            </div>
         </div>
         
         <h2 class="text-2xl md:text-4xl font-bold tracking-wider text-[#fde047] text-center px-4 drop-shadow-[0_0_20px_rgba(212,175,55,0.7)] cinzel-text">
             Tap to enter the celebration 👑🏏
         </h2>
 
-        <p class="mt-5 text-sm md:text-base tracking-[0.3em] uppercase text-white/80 mono-text">
+        <p class="mt-5 text-sm md:text-base tracking-[0.3em] uppercase text-white/90 mono-text">
             From Syed Uzair
         </p>
     </div>
 
-    <!-- Audio Element (Direct repo audio file or royalty-free stadium anthem) -->
-    <audio id="bg-music" loop src="anthem.mp3" preload="auto"></audio>
+    <!-- Audio Element configured with uploaded GitHub MP3 file -->
+    <audio id="bg-music" loop src="[@download_it_bot mp3] @royalchallengersbengaluruYT RCB An.mp3" preload="auto"></audio>
 
     <main id="main-content" class="hidden min-h-screen px-4 py-16 md:px-8 max-w-5xl mx-auto flex flex-col items-center opacity-0 transition-opacity duration-1000 relative z-10">
         
@@ -294,7 +341,7 @@
                 From Syed Uzair With Love ❤️
             </p>
 
-            <h1 class="great-vibes text-7xl md:text-9xl text-[#fde047] drop-shadow-[0_4px_25px_rgba(212,175,55,0.45)] mb-12 tracking-wide">
+            <h1 class="great-vibes text-7xl md:text-9xl text-[#fde047] drop-shadow-[0_4px_25px_rgba(212,175,55,0.5)] mb-12 tracking-wide">
                 Happy 32nd Birthday
             </h1>
 
@@ -311,8 +358,8 @@
                     </h2>
                 </div>
                 
-                <div class="cream-glass px-8 py-3 rounded-sm shadow-xl inline-block border-t-4 border-t-[#c8102e]">
-                    <p class="mono-text text-xs md:text-sm text-[#20130b] font-bold tracking-[0.35em] uppercase m-0 leading-none">
+                <div class="translucent-glass px-8 py-3 rounded-full shadow-xl inline-block border border-white/30">
+                    <p class="mono-text text-xs md:text-sm text-[#fde047] font-bold tracking-[0.35em] uppercase m-0 leading-none">
                         32 Years of Excellence • The King's True Soldier 👑
                     </p>
                 </div>
@@ -321,7 +368,7 @@
 
         <!-- 19 October Milestone Section -->
         <section class="w-full mb-24 mt-16 pt-16 relative">
-            <div class="cream-glass pt-24 pb-16 px-8 md:px-16 text-center relative">
+            <div class="translucent-glass pt-24 pb-16 px-8 md:px-16 text-center relative border border-white/20">
                 
                 <div class="date-badge">
                     <span class="text-3xl md:text-4xl font-black leading-tight drop-shadow-md text-center cinzel-text">
@@ -330,15 +377,15 @@
                 </div>
 
                 <div class="max-w-3xl mx-auto">
-                    <i class="fa-solid fa-quote-left text-4xl text-[#d4af37] mb-8 block opacity-60"></i>
+                    <i class="fa-solid fa-quote-left text-4xl text-[#fde047] mb-8 block opacity-70"></i>
                     
-                    <p class="serif-text text-xl md:text-2xl leading-loose md:leading-loose text-[#20130b] font-medium">
-                        <span class="text-[#c8102e] font-bold">19th October 1994</span> — the day a truly special person was born. And today, on <span class="text-[#c8102e] font-bold">19th October 2026</span>, you complete <strong class="text-[#991b1b]">32 amazing years!</strong> 🥳❤️
+                    <p class="serif-text text-xl md:text-2xl leading-loose md:leading-loose text-white font-normal">
+                        <span class="text-[#fde047] font-bold">19th October 1994</span> — the day a truly special person was born. And today, on <span class="text-[#fde047] font-bold">19th October 2026</span>, you complete <strong class="text-red-400 font-bold">32 amazing years!</strong> 🥳❤️
                         <br><br>
                         In these 32 years, you have created memories that are impossible to measure. But among all the numbers, the most beautiful thing is the person you have become — caring, kind, genuine, and always standing tall for the people you love. 🫶❤️
                     </p>
                     
-                    <i class="fa-solid fa-quote-right text-4xl text-[#d4af37] mt-8 block opacity-60"></i>
+                    <i class="fa-solid fa-quote-right text-4xl text-[#fde047] mt-8 block opacity-70"></i>
                 </div>
             </div>
         </section>
@@ -352,9 +399,9 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
                 
                 <!-- Vital Stats -->
-                <div class="cream-glass p-8 transition-transform duration-300 hover:-translate-y-2">
-                    <h3 class="text-2xl font-bold mb-6 flex items-center gap-4 text-[#c8102e] border-b-2 border-[#d4af37]/30 pb-4 cinzel-text">
-                        <i class="fa-solid fa-heart-pulse"></i> Body & Heart Milestones
+                <div class="translucent-glass p-8 transition-transform duration-300 hover:-translate-y-2">
+                    <h3 class="text-2xl font-bold mb-6 flex items-center gap-4 text-[#fde047] border-b border-white/20 pb-4 cinzel-text">
+                        <i class="fa-solid fa-heart-pulse text-red-400"></i> Body & Heart Milestones
                     </h3>
                     <div class="text-base font-serif">
                         <div class="stat-row"><span>Estimated breaths</span> <span>≈ 25 Crore (250M)</span></div>
@@ -366,9 +413,9 @@
                 </div>
 
                 <!-- Cosmic & Time -->
-                <div class="cream-glass p-8 transition-transform duration-300 hover:-translate-y-2">
-                    <h3 class="text-2xl font-bold mb-6 flex items-center gap-4 text-[#b8860b] border-b-2 border-[#d4af37]/30 pb-4 cinzel-text">
-                        <i class="fa-solid fa-earth-americas"></i> Cosmic & Earth Journey
+                <div class="translucent-glass p-8 transition-transform duration-300 hover:-translate-y-2">
+                    <h3 class="text-2xl font-bold mb-6 flex items-center gap-4 text-[#fde047] border-b border-white/20 pb-4 cinzel-text">
+                        <i class="fa-solid fa-earth-americas text-blue-400"></i> Cosmic & Earth Journey
                     </h3>
                     <div class="text-base font-serif">
                         <div class="stat-row"><span>Days on Earth</span> <span>11,688 Days lived</span></div>
@@ -384,24 +431,24 @@
 
         <!-- Special King Kohli Tribute Section -->
         <section class="w-full mb-24 relative">
-            <div class="cream-glass p-8 md:p-14 border-t-8 border-t-[#c8102e] shadow-2xl relative overflow-hidden">
-                <div class="absolute -right-10 -bottom-10 text-[14rem] font-bold text-[#c8102e]/10 select-none jersey-font pointer-events-none">
+            <div class="translucent-glass p-8 md:p-14 border-t-4 border-t-red-500 shadow-2xl relative overflow-hidden">
+                <div class="absolute -right-8 -bottom-10 text-[14rem] font-bold text-red-500/15 select-none jersey-font pointer-events-none">
                     18
                 </div>
 
                 <div class="flex items-center gap-4 mb-6">
                     <span class="text-4xl">👑</span>
-                    <h3 class="cinzel-text text-3xl md:text-4xl text-[#c8102e] font-black tracking-wide">
+                    <h3 class="cinzel-text text-3xl md:text-4xl text-[#fde047] font-black tracking-wide">
                         The King Kohli Devotion
                     </h3>
                     <span class="text-4xl">🏏</span>
                 </div>
 
-                <p class="serif-text text-xl md:text-2xl leading-relaxed text-[#20130b] font-medium">
-                    And of course, we can never forget your biggest passion… <strong class="text-[#c8102e]">KING VIRAT KOHLI! 👑🏏🔥</strong>
+                <p class="serif-text text-xl md:text-2xl leading-relaxed text-white/95 font-normal">
+                    And of course, we can never forget your biggest passion… <strong class="text-red-400">KING VIRAT KOHLI! 👑🏏🔥</strong>
                     <br><br>
                     You are not just a fan — you are a true King Kohli soldier! 😂❤️ 
-                    May your life always radiate that exact same <strong>intensity, unmatched confidence, dedication</strong>, and the relentless never-give-up attitude that the King commands on the pitch. May your next innings be filled with match-winning partnerships, peace, and endless centuries of joy!
+                    May your life always radiate that exact same <strong class="text-[#fde047]">intensity, unmatched confidence, dedication</strong>, and the relentless never-give-up attitude that the King commands on the pitch. May your next innings be filled with match-winning partnerships, peace, and endless centuries of joy!
                 </p>
             </div>
         </section>
@@ -412,37 +459,37 @@
                 To My Amazing Best Friend
             </h3>
             
-            <div class="inline-block cream-glass py-12 px-8 md:px-16 shadow-2xl relative max-w-3xl">
-                <i class="fa-solid fa-quote-left text-4xl text-[#d4af37] absolute top-6 left-6 opacity-30"></i>
+            <div class="inline-block translucent-glass py-12 px-8 md:px-16 shadow-2xl relative max-w-3xl border border-white/25">
+                <i class="fa-solid fa-quote-left text-4xl text-[#fde047] absolute top-6 left-6 opacity-40"></i>
                 
-                <p class="serif-text text-2xl md:text-3xl text-[#20130b] font-bold italic leading-relaxed mb-6">
+                <p class="serif-text text-2xl md:text-3xl text-white font-medium italic leading-relaxed mb-6">
                     "Keep smiling. Keep shining. Keep being the caring person you are. And most importantly, never stop chasing your dreams!"
                 </p>
 
-                <p class="serif-text text-lg md:text-xl text-[#5a4237] leading-relaxed">
+                <p class="serif-text text-lg md:text-xl text-white/80 leading-relaxed">
                     Here’s to your 32nd birthday, 32 years of unforgettable memories, millions of moments, and countless more glorious years ahead! 🥂🎂❤️
                 </p>
 
-                <div class="mt-8 pt-6 border-t border-[#d4af37]/30">
-                    <p class="mono-text text-xs md:text-sm font-bold tracking-[0.3em] uppercase text-[#c8102e]">
+                <div class="mt-8 pt-6 border-t border-white/20">
+                    <p class="mono-text text-xs md:text-sm font-bold tracking-[0.3em] uppercase text-red-400">
                         With All My Respect & Love
                     </p>
-                    <p class="cinzel-text text-2xl md:text-3xl font-black text-[#20130b] mt-1">
+                    <p class="cinzel-text text-2xl md:text-3xl font-black text-[#fde047] mt-1">
                         — SYED UZAIR ❤️
                     </p>
                 </div>
             </div>
         </section>
 
-        <!-- Share Button -->
-        <button id="share-btn" class="mb-24 px-12 py-5 flex items-center gap-4 text-xl font-bold rounded-full bg-gradient-to-r from-[#d4af37] via-[#fde047] to-[#d4af37] text-[#20130b] shadow-[0_10px_30px_rgba(212,175,55,0.4)] transform hover:scale-105 active:scale-95 transition-all duration-300 border-2 border-white/60 cinzel-text tracking-wide">
+        <!-- Share Button (Updated with your exact link) -->
+        <button id="share-btn" class="mb-24 px-12 py-5 flex items-center gap-4 text-xl font-bold rounded-full bg-gradient-to-r from-[#d4af37] via-[#fde047] to-[#d4af37] text-[#1a0508] shadow-[0_10px_30px_rgba(212,175,55,0.5)] transform hover:scale-105 active:scale-95 transition-all duration-300 border-2 border-white/60 cinzel-text tracking-wide">
             <i class="fa-solid fa-share-nodes text-2xl"></i> Share the celebration
         </button>
 
     </main>
 
     <!-- Fixed Mute Button -->
-    <button id="mute-btn" class="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-[#100204] border-2 border-[#d4af37] flex items-center justify-center text-xl hover:bg-[#2a050b] transition-all hover:scale-110 z-50 shadow-[0_5px_20px_rgba(0,0,0,0.5)] hidden">
+    <button id="mute-btn" class="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-[#150306]/80 backdrop-blur-md border-2 border-[#d4af37] flex items-center justify-center text-xl hover:bg-[#2a050b] transition-all hover:scale-110 z-50 shadow-[0_5px_20px_rgba(0,0,0,0.6)] hidden">
         <i class="fa-solid fa-volume-high text-[#d4af37]" id="audio-icon"></i>
     </button>
 
@@ -496,10 +543,10 @@
 
         const colors = [
             [253, 224, 71],  // Royal Gold
-            [200, 16, 46],   // RCB Red
+            [239, 68, 68],   // RCB Red
             [255, 255, 255], // Pure Silver
-            [248, 113, 113], // Soft Coral Red
-            [30, 58, 138]    // Deep Navy
+            [252, 165, 165], // Soft Rose
+            [59, 130, 246]   // Royal Blue
         ];
 
         class Particle {
@@ -599,19 +646,19 @@
             }
         });
 
-        // --- Native Share Sheet ---
+        // --- Share Button Logic using tinyurl link ---
         shareBtn.addEventListener('click', async () => {
             const shareData = {
                 title: 'Happy 32nd Birthday Tawseef Wani!',
                 text: 'From Syed Uzair: Celebrating 32 amazing years and King Kohli devotion! 👑🏏',
-                url: window.location.href
+                url: 'https://tinyurl.com/mr43yv47'
             };
 
             try {
                 if (navigator.share) {
                     await navigator.share(shareData);
                 } else {
-                    await navigator.clipboard.writeText(window.location.href);
+                    await navigator.clipboard.writeText('https://tinyurl.com/mr43yv47');
                     const originalHTML = shareBtn.innerHTML;
                     shareBtn.innerHTML = '<i class="fa-solid fa-check text-2xl"></i> Link Copied!';
                     setTimeout(() => { shareBtn.innerHTML = originalHTML; }, 3000);
